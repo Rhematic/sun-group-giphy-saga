@@ -13,6 +13,21 @@ const categoryRouter = require('./routes/category.router');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//Express Routes
+
+const giphy_api_key = 'YOUR KEY HERE'; // Replace to make project work
+
+app.get('/gifs' , (req, res) => {
+    axios.get(`https://api.giphy.com/v1/gifs/trending?api_key=${giphy_api_key}`)
+    .then((response) => {
+        res.send(response.data)
+    })
+    .catch((error) => {
+        console.log('GET /gifs failed:' , error);
+        res.sendStatus(500);
+    })
+})
+
 // Serve static files
 app.use(express.static('build'));
 
